@@ -1,21 +1,28 @@
-const express = require('express')
-const app = express()
 require('dotenv').config()
-
+const mongoose = require('mongoose')
+const express = require('express')
+const bodyParser = require('body-parser')
+const app = express()
 const port = process.env.PORT || 3000
 
+
+// body-parse | form-json
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
+
+
+
 // conexion-DB
-const mongoose = require('mongoose')
 const uri = `mongodb+srv://${process.env.USER}:${process.env.PASSWORD}@cluster0.5jpurcg.mongodb.net/${process.env.DBNAME}?retryWrites=true&w=majority`
 
 mongoose.connect(uri,
    { 
       useNewUrlParser: true,
       useUnifiedTopology: true
-   }
-)
+   })
    .then(() => console.log('DB conectado...!'))
    .catch(e => console.log(e))
+
 
 
 // engine template
